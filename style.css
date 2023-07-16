@@ -4,18 +4,27 @@
     box-sizing: border-box;
 }
 
+/* 
+    todo : declare style properties to the roll element. 
+    todo : Which is used to indicate the sorting column 
+*/
+:root {
+    --up_arrow_color: #fff;
+    --up_arrow_shadow: 0px 0px 10px #fff;
+
+    --down_arrow_color: #a3a3a3;
+    --down_arrow_shadow: 0px 0px 0px #000000;
+}
+
 body {
     background-color: #000;
     color: #fff;
     font-family: "Times New Roman", Times, serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
 }
 
 .table {
-    width: 100%;
-    height: 100%;
     padding: 20px 50px;
     max-width: 100%;
 }
@@ -43,4 +52,92 @@ th {
 
 tr:hover td {
     background-color: #111111;
+}
+
+.footer {
+    margin-top: 25px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    padding: 7px 15px;
+    color: #fff;
+    background-color: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+button:hover {
+    background-color: #a0a0a0;
+}
+button.active {
+    background-color: #a0a0a0;
+}
+
+.tab_head_container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.page_limit {
+    font-size: 20px;
+}
+
+.page_limit select {
+    font-size: 16px;
+    color: #fff;
+    padding: 5px;
+    background-color: #3f3c3c;
+}
+
+.page_limit option {
+    background-color: #5b5555;
+}
+
+#tab_filter_text {
+    height: 25px;
+    width: 200px;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+#tab_filter_btn {
+    font-size: 15px;
+    border-radius: 4px;
+    background-color: #6b6b6b;
+}
+
+th {
+    position: relative;
+}
+th.sort_indication::after {
+    position: absolute;
+    content: "\25b2";
+    font-size: 10px;
+    cursor: pointer;
+    color: var(--up_arrow_color);
+    text-shadow: var(--up_arrow_shadow);
+    right: 5px;
+    top: 40%;
+    transform: translateY(-60%);
+}
+th.sort_indication::before {
+    position: absolute;
+    content: "\25bc";
+    font-size: 10px;
+    cursor: pointer;
+    color: var(--down_arrow_color);
+    text-shadow: var(--downs_arrow_shadow);
+    right: 5px;
+    top: 40%;
+    transform: translateY(-40%);
+    margin-top: 8px;
 }

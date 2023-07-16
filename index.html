@@ -12,107 +12,45 @@
         <link rel="stylesheet" href="./style.css" />
     </head>
     <body>
-        <!-- Create table with 5 col and it should contain table header and table body -->
+        <!-- todo : add pagination Header to display a Drop Down to select the table size -->
+
         <section class="table">
+            <div class="tab_head_container">
+                <div class="page_limit">
+                    <span>Shows</span>
+                    <select id="table_size">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span> entries</span>
+                </div>
+                <div class="tab_filter_container">
+                    <input type="text" id="tab_filter_text" />
+                    <button class="active" id="tab_filter_btn" type="button">
+                        Filter
+                    </button>
+                </div>
+            </div>
+
             <table>
                 <thead>
                     <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Year</th>
-                        <th>Total Marks</th>
-                        <th>Percentage</th>
+                        <th colName="rank">Rank</th>
+                        <th colName="name">Name</th>
+                        <th colName="year">Year</th>
+                        <th colName="score">Total Marks</th>
+                        <th colName="percentage">Percentage</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- 1 -> 5 -->
-                    <tr>
-                        <td>1</td>
-                        <td>Rocky</td>
-                        <td>1999</td>
-                        <td>525</td>
-                        <td>95%</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>John</td>
-                        <td>1992</td>
-                        <td>500</td>
-                        <td>91%</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Sang</td>
-                        <td>2003</td>
-                        <td>600</td>
-                        <td>99%</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Andrew</td>
-                        <td>1995</td>
-                        <td>400</td>
-                        <td>89%</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Jack</td>
-                        <td>1996</td>
-                        <td>500</td>
-                        <td>90%</td>
-                    </tr>
-                    <!-- 6 -> 10 -->
-                    <tr>
-                        <td>6</td>
-                        <td>Anna</td>
-                        <td>200</td>
-                        <td>325</td>
-                        <td>95%</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Oliver</td>
-                        <td>1997</td>
-                        <td>220</td>
-                        <td>89%</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Harry</td>
-                        <td>1996</td>
-                        <td>680</td>
-                        <td>88%</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>Jacob</td>
-                        <td>1992</td>
-                        <td>480</td>
-                        <td>86%</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Charlie</td>
-                        <td>2001</td>
-                        <td>560</td>
-                        <td>93%</td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
-        </section>
-        <div class="footer">
-            <span>Showing 1 to 10 of 60 entries</span>
-            <div class="index_buttons">
-                <button type="button">Prev</button>
-                <button type="button">1</button>
-                <button type="button">2</button>
-                <button type="button">3</button>
-                <button type="button">4</button>
-                <button type="button">5</button>
-                <button type="button">6</button>
-                <button type="button">Next</button>
+            <div class="footer">
+                <span>Showing 1 to 10 of 60 entries</span>
+                <div class="index_buttons"></div>
             </div>
-        </div>
+        </section>
     </body>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
