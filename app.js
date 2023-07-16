@@ -460,7 +460,7 @@ function preLoadCalculations() {
 }
 
 function filterRanksList() {
-    let tab_filter_text = $("#tab_filter_text").val();
+    let tab_filter_text = document.getElementById("tab_filter_text").value;
     if (tab_filter_text != "") {
         // todo : if text field is empty, assign rank list directly to the array
         // todo : else filter the ranks list then assign it to array
@@ -486,19 +486,16 @@ function displayIndexButtons() {
     // todo : create a function to assign the values for max_index , array_length,
     // todo : and other variables before displaying Pagination buttons
     preLoadCalculations();
-    $(".index_buttons button").remove();
-    $(".index_buttons").append(
-        '<button onclick="prev()" type="button">Prev</button>'
-    );
+    var indexButtonsContainer = document.querySelector(".index_buttons");
+    indexButtonsContainer.innerHTML = "";
+    indexButtonsContainer.innerHTML +=
+        '<button onclick="prev()" type="button">Prev</button>';
     for (var i = 1; i <= max_index; i++) {
-        $(".index_buttons").append(
-            `<button onclick="indexPagination(${i})" index="${i}" type="button">${i}</button>`
-        );
+        indexButtonsContainer.innerHTML += `<button onclick="indexPagination(${i})" index="${i}" type="button">${i}</button>`;
     }
     highlightIndexButton();
-    $(".index_buttons").append(
-        '<button onclick="next()" type="button">Next</button>'
-    );
+    indexButtonsContainer.innerHTML +=
+        '<button onclick="next()" type="button">Next</button>';
 }
 
 // todo : create a function to Highlight pagination index button
@@ -509,19 +506,24 @@ function highlightIndexButton() {
         end_index = array_length;
     }
 
-    $(".footer span").text(
-        `Showing ${start_index} to ${end_index} of ${array_length} entries`
-    );
+    var footerSpan = document.querySelector(".footer span");
+    footerSpan.textContent = `Showing ${start_index} to ${end_index} of ${array_length} entries`;
 
     // Select the button based on the attribute  called "index"
-    $(".index_buttons button").removeClass("active");
-    $(`.index_buttons button[index = '${current_index}']`).addClass("active");
+    var indexButtons = document.querySelectorAll(".index_buttons button");
+    indexButtons.forEach(function (button) {
+        button.classList.remove("active");
+    });
+    var activeButton = document.querySelector(
+        `.index_buttons button[index='${current_index}']`
+    );
+    activeButton.classList.add("active");
 
     displayTableRows();
 }
 
 function sortRankList() {
-    array.sort((a, b) => {
+    array.sort(function (a, b) {
         if (ascOrder) {
             return a[sortCol] > b[sortCol] ? 1 : -1;
         } else {
@@ -530,12 +532,19 @@ function sortRankList() {
     });
 
     // todo : table sort Indication
-    $(".table th").removeClass("sort_indication");
+    var tableHeaders = document.querySelectorAll(".table th");
+    tableHeaders.forEach(function (header) {
+        header.classList.remove("sort_indication");
+    });
 
     // todo : append class "sort_indication" to the sorted table head column
-    $(`.table th[colName = ${sortCol}]`).addClass("sort_indication");
+    var sortedColumn = document.querySelector(
+        `.table th[colName='${sortCol}']`
+    );
+    sortedColumn.classList.add("sort_indication");
 
     // todo : change the color for both arrows based on the sorting order
+    var styles = document.documentElement.style;
     if (ascOrder) {
         styles.setProperty("--up_arrow_color", "#fff");
         styles.setProperty("--up_arrow_shadow", "0px 0px 10px #fff");
@@ -551,25 +560,25 @@ function sortRankList() {
 
 // todo : Remove all rows inside the table body and append the row dynamically
 function displayTableRows() {
-    $(".table table tbody tr ").remove();
+    var tableBody = document.querySelector(".table table tbody");
+    tableBody.innerHTML = "";
     // todo : calculate the start and end index to display the rows based on pagination index selected
-    let tab_start = start_index - 1;
-    let tab_end = end_index;
+    var tab_start = start_index - 1;
+    var tab_end = end_index;
 
     for (var i = tab_start; i < tab_end; i++) {
         // todo : create table row using tr and td tags, add required data from the object
         // todo : and append to the table body
-        let student = array[i];
-        let tr = `
-        <tr>
+        var student = array[i];
+        var tr = document.createElement("tr");
+        tr.innerHTML = `
             <td>${student.rank}</td>
             <td>${student.name}</td>
             <td>${student.year}</td>
             <td>${student.score}</td>
             <td>${student.percentage}</td>
-        </tr>
         `;
-        $(".table table tbody").append(tr);
+        tableBody.appendChild(tr);
     }
 }
 
@@ -582,6 +591,7 @@ function next() {
         highlightIndexButton();
     }
 }
+
 // todo : pagination by prev
 function prev() {
     if (current_index > 1) {
@@ -597,8 +607,9 @@ function indexPagination(index) {
 }
 
 // todo : pagination Header
-$("#table_size").change(function () {
-    table_size = parseInt($(this).val());
+var tableSizeSelect = document.getElementById("table_size");
+tableSizeSelect.addEventListener("change", function () {
+    table_size = parseInt(this.value);
     current_index = 1;
     start_index = 1;
 
@@ -607,7 +618,8 @@ $("#table_size").change(function () {
 });
 
 // todo : create a function to filter the array
-$("#tab_filter_btn").click(function () {
+var tabFilterBtn = document.getElementById("tab_filter_btn");
+tabFilterBtn.addEventListener("click", function () {
     // todo : set current_index and start_index value as 1. Because after filter:
     // todo : the array table has to display first 10 records
 
@@ -619,15 +631,18 @@ $("#tab_filter_btn").click(function () {
 });
 
 // todo :
-$(".table th").click(function () {
-    // todo : get the colName attribute when click on the Table header column
-    // todo : and assign to colName variable set current_index and start_index
-    // todo : to 1 and call method displayIndexButton()
-    let colName = $(this).attr("colName");
-    // todo : change the order from Ascending to Descending if click on same column
-    ascOrder = sortCol == colName ? !ascOrder : true;
-    sortCol = colName;
-    current_index = 1;
-    start_index = 1;
-    displayIndexButtons();
+var tableHeaders = document.querySelectorAll(".table th");
+tableHeaders.forEach(function (header) {
+    header.addEventListener("click", function () {
+        // todo : get the colName attribute when click on the Table header column
+        // todo : and assign to colName variable set current_index and start_index
+        // todo : to 1 and call method displayIndexButton()
+        var colName = this.getAttribute("colName");
+        // todo : change the order from Ascending to Descending if click on same column
+        ascOrder = sortCol == colName ? !ascOrder : true;
+        sortCol = colName;
+        current_index = 1;
+        start_index = 1;
+        displayIndexButtons();
+    });
 });
